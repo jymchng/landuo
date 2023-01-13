@@ -3,7 +3,6 @@ import sys
 from weakref import WeakKeyDictionary
 from typing import Union, Any
 from ._internals import _missing, _notavalue
-from ._lpnotusedict import 
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -11,25 +10,26 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
     stream=sys.stdout)
 
-
 class lazyproperty:
     _registry = dict()
     name = None
+    _class_cache: WeakKeyDictionary['BaseMutableLazyProperty', Any] = WeakKeyDictionary()
     
     def __init_subclass__(
             cls,
             immutable: bool,
+            use_instance_dict: bool=True,
             prefix: str = '',
             private_var_name: str = '',
-            use_instance_dict=False,
             **init_subclass_kwargs):
         
         super().__init_subclass__(**init_subclass_kwargs)
         cls._prefix = prefix or ''
         cls._private_var_name = private_var_name or ''
         cls._registry[(immutable, use_instance_dict)] = cls
+        logger.info(cls._registry)
 
-    def __new__(cls, immutable, use_instance_dict):
+    def __new__(cls, immutable, use_instance_dict=True):
         return cls._registry[(immutable, use_instance_dict)]
 
     def __set_name__(self, owner, name):
@@ -76,74 +76,3 @@ class lazyproperty:
     
     def _get_class_cache(self):
         return self._class_cache
-
-
-class BaseMutableLazyProperty(lazyproperty, immutable=False):
-    
-    mutablelpinst = list()
-    
-    def __init_subclass__(cls, immutable: bool, prefix: str = '', private_var_name: str = '', use_instance_dict=False, **init_subclass_kwargs):
-        return super().__init_subclass__(immutable, prefix, private_var_name, use_instance_dict, **init_subclass_kwargs)
-    
-    def __new__(cls, fget, fset=None, fdel=None):
-        obj = object.__new__(cls)
-        cls.mutablelpinst.append(obj)
-        return obj
-
-    def __init__(self, fget, fset=None, fdel=None):
-        self._fget = fget
-        self._fset = fset
-        self._fdel = fdel
-        self._recalculate = True
-
-    def __set__(self, instance, value):
-        if self._fset is None:
-            raise Exception(f"lazyproperty `{self.name}` `setter` method is not implemented.")
-        self._fset(instance, value)
-        for instance_of_subclasses in self.mutablelpinst:
-            instance_of_subclasses._recalculate = True                
-
-    def setter(self, fset):
-        mutablelazyprop = type(self)(self._fget, fset, self._fdel)
-        mutablelazyprop.name = self.name
-        del self
-        return mutablelazyprop
-
-    def deleter(self, fdel):
-        mutablelazyprop = type(self)(self._fget, self._fset, fdel)
-        mutablelazyprop.name = self.name
-        return mutablelazyprop
-
-    # def __delete__(self, instance):
-    #     super().__delete__(instance)
-    #     self._fset = None
-
-
-class BaseImmutableLazyProperty(lazyproperty, immutable=True):
-
-    @staticmethod
-    def func(instance):
-        raise TypeError(
-            "Cannot use cached_property instance without calling "
-            "__set_name__() on it."
-        )
-
-    def __new__(cls, fget, *, fset=None, fdel=None):
-        obj = object.__new__(cls)
-        return obj
-
-    def __init__(self, fget, *, fdel=None):
-        self._fget = fget
-        self._fdel = fdel
-        self._recalculate = False
-
-    def __set__(self, instance, value):
-        raise AttributeError(
-            f"The lazyproperty `{self.name}` is set to be immutable.")
-
-    def deleter(self, fdel):
-        mutablelazyprop = type(self)(self._fget, fdel)
-        mutablelazyprop.name = self.name
-        return mutablelazyprop
-
-property = lazyproperty(immutable=False, use_instance_dict=False)

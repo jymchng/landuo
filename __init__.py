@@ -1,4 +1,8 @@
-from landuo.lazyproperty import (
+from landuo import (
     lazyproperty,
-    property,
+    _internals,
+    _lpnotusedict,
+    _lpusedict,   
 )
+
+property = lazyproperty.lazyproperty(immutable=False)
