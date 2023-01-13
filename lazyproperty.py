@@ -14,20 +14,21 @@ logging.basicConfig(
 class lazyproperty:
     _registry = dict()
     name = None
+    _class_cache: WeakKeyDictionary['BaseMutableLazyProperty', Any] = WeakKeyDictionary()
     
     def __init_subclass__(
             cls,
             immutable: bool,
+            use_instance_dict=False,
             prefix: str = '',
             private_var_name: str = '',
-            use_instance_dict=False,
             **init_subclass_kwargs):
         super().__init_subclass__(**init_subclass_kwargs)
         cls._prefix = prefix or ''
         cls._private_var_name = private_var_name or ''
         cls._registry[(immutable, use_instance_dict)] = cls
 
-    def __new__(cls, immutable, use_instance_dict):
+    def __new__(cls, immutable, use_instance_dict=False):
         return cls._registry[(immutable, use_instance_dict)]
 
     def __set_name__(self, owner, name):
@@ -77,8 +78,6 @@ class lazyproperty:
 
 
 class BaseMutableLazyProperty(lazyproperty, immutable=False):
-
-    _class_cache: WeakKeyDictionary['BaseMutableLazyProperty', Any] = WeakKeyDictionary()
     
     def __new__(cls, fget, fset=None, fdel=None):
         obj = object.__new__(cls)
