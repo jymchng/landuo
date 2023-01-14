@@ -24,7 +24,6 @@ class lazyproperty:
         cls._prefix = prefix or ''
         cls._private_var_name = private_var_name or ''
         cls._registry[(immutable, use_instance_dict)] = cls
-        logger.info(cls._registry)
 
     def __new__(cls, immutable, use_instance_dict=True):
         return cls._registry[(immutable, use_instance_dict)]
@@ -64,15 +63,14 @@ class lazyproperty:
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        # if self._fget is None:
-        #     raise Exception(f"lazyproperty `{self.name}` has been deleted.")
         if self.name in instance.__dict__ and not self._recalculate:
             return instance.__dict__[self.name]
-        # set it to attribute of the instance since instance.__dict__ will be
-        # look up first
         instance.__dict__[self.name] = value = self._fget(instance)
         self._recalculate = False
         return value
 
     def _get_class_cache(self):
         return self._class_cache
+    
+    def _get_registry(self):
+        return self._registry

@@ -27,7 +27,7 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         self._fget = fget
         self._fset = _states._unimplemented
         self._fdel = _states._unimplemented
-        self._recalculate = True
+        
 
     def __set__(self, instance, value):
         if self._fset is _states._unimplemented:
