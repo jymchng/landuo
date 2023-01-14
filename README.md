@@ -2,6 +2,7 @@
 _just a property but lazier_...
 
 Simply put, `lazyproperty` = `property` + `cached_property`.
+Version: 0.1.0
 
 # Reasons for Creating This
 1. In-built `property` decorator allows you to manage your instances' attributes but at a cost of repeated computation for each read of the attribute.
@@ -11,4 +12,9 @@ Simply put, `lazyproperty` = `property` + `cached_property`.
 
 # How to Use
 #TODO
+
+# References
+[1] Here is a list of implementations for '`cached_property`'.
+
+
 

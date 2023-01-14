@@ -1,10 +1,10 @@
-from .src import (
+from . import (
     _lpnotusedict,
     _lpusedict,
     _states,   
 )
 
-from .src.lazyproperty import lazyproperty
+from .lazyproperty import lazyproperty
 
 property = lazyproperty(immutable=False)
 cached_property = lazyproperty(immutable=False)
