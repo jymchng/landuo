@@ -1,8 +1,10 @@
-from landuo import (
-    lazyproperty,
-    _internals,
+from .src import (
     _lpnotusedict,
-    _lpusedict,   
+    _lpusedict,
+    _states,   
 )
 
-property = lazyproperty.lazyproperty(immutable=False)
+from .src.lazyproperty import lazyproperty
+
+property = lazyproperty(immutable=False)
+cached_property = lazyproperty(immutable=False)

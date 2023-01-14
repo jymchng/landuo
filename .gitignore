@@ -161,3 +161,4 @@ cython_debug/
 
 *_debug.py
 cached_property.py
+examples/
