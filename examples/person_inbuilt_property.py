@@ -21,7 +21,7 @@ class Person:
         self._name = value
         
     def _introduction(self):
-        return f"Hi, my name is {self.name} and my occupation is {self.occupation}!"
+        return f"Hi, my name is {self.name}!"
     
     introduction = property(_introduction) # different way to initialize a property
 
@@ -65,9 +65,10 @@ class Employee(Person):
     def __init__(self, name, height, weight, occupation):
         super().__init__(name, height, weight)
         self._occupation = occupation
-        
-    # def _introduction(self):
-    #     return self.introduction + ' and I am a happy person!'
+    
+    @property  
+    def introduction(self):
+        return super().introduction + f' I am a happy person and my occupation is {self.occupation}!'
     
     # def _introduction(self):
     #     return super().introduction + ' and I am a happy person!'
