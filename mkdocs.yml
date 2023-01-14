@@ -1,1 +1,8 @@
-site_name: My Docs
+site_name: landuo
+
+nav:
+    - Home: index.md
+    - Quickstart: quickstart.md
+
+theme:
+    name: bootstrap4

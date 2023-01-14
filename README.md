@@ -10,11 +10,14 @@ Version: 0.1.0
 
 `lazyproperty` solves this problem by enabling caching of the values of your instances' attributes AND implementing `setter` methods for each of them.
 
+# Objectives
+#TODO
+
 # How to Use
 #TODO
 
 # References
 [1] Here is a list of implementations for '`cached_property`'.
-
+#TODO
 
 
