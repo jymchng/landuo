@@ -27,15 +27,13 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         self._fget = fget
         self._fset = _states._unimplemented
         self._fdel = _states._unimplemented
-        self._recalculate = True
-
+        
     def __set__(self, instance, value):
         if self._fset is _states._unimplemented:
             raise SetterUnimplemented(self.name, _states._unimplemented)
         self._fset(instance, value)
-        for instance_of_subclasses in self.mutablelpinst:
-            instance_of_subclasses._recalculate = True
-
+        self.mutablelpinst = WeakSet()
+        
     def setter(self, fset):
         mutablelazyprop = type(self)(self._fget, fset, self._fdel)
         mutablelazyprop.name = self.name
