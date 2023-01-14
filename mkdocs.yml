@@ -1,8 +1,14 @@
 site_name: landuo
 
 nav:
-    - Home: index.md
-    - Quickstart: quickstart.md
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - APIs:
+    - lazyproperty: APIs/lazyproperty.md
 
 theme:
     name: bootstrap4
+
+plugins:
+  - search
+  - mkdocstrings

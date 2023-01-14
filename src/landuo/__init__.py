@@ -1,7 +1,7 @@
 from . import (
     _lpnotusedict,
     _lpusedict,
-    _states,   
+    _states,
 )
 
 from .lazyproperty import lazyproperty

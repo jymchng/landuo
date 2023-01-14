@@ -7,6 +7,35 @@ logger = logging.getLogger(__name__)
 
 
 class lazyproperty:
+    """Caches a managed property of a class.
+
+    Arguments:
+        immutable (bool): If `True`, managed property of a class cannot be set to other values.
+        use_instance_dict (bool, optional): Defaults to `True`. If `True`, `lazyproperty` uses the instance's `__dict__` attribute as 
+            the cache for the managed property. If `False`, `lazyproperty` uses a `weakref.WeakKeyDictionary` as the cache.
+            
+    Examples:
+        from landuo import property # functions in the same way as inbuilt `@property` decorator.
+        
+        class Person:
+            def __init__(self, name):
+                self._name = name
+            
+            @property # note that this `property` is `lazyproperty(True)`
+            def name(self):
+                return self._name
+        
+            @name.setter
+            def name(self, new_name):
+                self._name = new_name
+        
+        >>> henry = Person('Henry')
+        >>> henry.name
+        'Henry'
+        >>> henry.name = 'James'
+        >>> henry.name
+        'James'
+    """
     _registry = dict()
     name = None
     _class_cache: WeakKeyDictionary['BaseMutableLazyProperty',
@@ -71,6 +100,6 @@ class lazyproperty:
 
     def _get_class_cache(self):
         return self._class_cache
-    
+
     def _get_registry(self):
         return self._registry
