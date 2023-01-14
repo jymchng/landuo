@@ -2,7 +2,7 @@ import logging
 import sys
 from weakref import WeakKeyDictionary
 from typing import Union, Any
-from ._internals import _missing, _notavalue
+from ._internals import _missing, _notavalue, _set_with_at_most_one_element
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -33,6 +33,8 @@ class lazyproperty:
         return cls._registry[(immutable, use_instance_dict)]
 
     def __set_name__(self, owner, name):
+        self._base_owner = _set_with_at_most_one_element(owner)
+        
         preferred_name = self._private_var_name or (
             self._prefix +
             name) or (
@@ -41,7 +43,9 @@ class lazyproperty:
                 'private_var_prefix',
                 '') +
             name)
+            
         self.name = preferred_name
+        
         if name != self.name:
             raise TypeError(
                 "Cannot assign the same cached_property to two different names "

@@ -6,6 +6,12 @@ class NotUseDictMutableLazyProperty(BaseMutableLazyProperty, immutable=False, us
     def __get__(self, instance, owner):
         if instance is None:
             return self
+        if owner not in self._base_owner:
+            # instance is of type subclass of owner, need to apply indirection here
+            print(f"{owner=}")
+            self._fget = lambda _: getattr(instance, self._fget.__name__)()
+            print(self._fget)
+            self._recalculate = True
         # if self._fget is None:
         #     raise Exception(f"lazyproperty `{self.name}` has been deleted.")
         if self in self._class_cache and not self._recalculate:
@@ -28,6 +34,8 @@ class NotUseDictImmutableLazyProperty(BaseImmutableLazyProperty, immutable=True,
     def __get__(self, instance, owner):
         if instance is None:
             return self
+        if owner not in self._base_owner:
+            self._recalculate = True
         # if self._fget is None:
         #     raise Exception(f"lazyproperty `{self.name}` has been deleted.")
         if self in self._class_cache and not self._recalculate:
