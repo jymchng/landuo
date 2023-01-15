@@ -64,6 +64,12 @@ class Person:
 *    werkzeug's [`cached_property`](https://tedboy.github.io/flask/_modules/werkzeug/utils.html#cached_property) <br>
 *    bottles' [`cached_property`](https://github.com/bottlepy/bottle/blob/df67999584a0e51ec5b691146c7fa4f3c87f5aac/bottle.py#L215)<br>
 *    bottles' [`lazy_attribute`](https://github.com/bottlepy/bottle/blob/df67999584a0e51ec5b691146c7fa4f3c87f5aac/bottle.py#L230)<br>
+*    sad2project's [`LazyProperty`](https://github.com/sad2project/descriptor-tools/blob/master/src/descriptor_tools/properties.py#L10)<br>
+
+# Why the Name `landuo`?
+
+懒惰 (Hàn yǔ Pīn yīn: lănduò) means lazy in Chinese, which describes the `lazyproperty` class of this package.
+
 
 
 
