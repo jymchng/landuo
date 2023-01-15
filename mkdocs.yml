@@ -1,7 +1,8 @@
 site_name: landuo
 
 nav:
-  - Home: index.md
+  - Home: README.md
+  - Install: installation.md
   - Quickstart: quickstart.md
   - APIs:
     - lazyproperty: APIs/lazyproperty.md
