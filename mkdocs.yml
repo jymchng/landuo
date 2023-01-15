@@ -1,0 +1,21 @@
+site_name: landuo
+
+nav:
+  - Home: README.md
+  - Install: installation.md
+  - Quickstart: quickstart.md
+  - APIs:
+    - lazyproperty: APIs/lazyproperty.md
+
+theme:
+    name: readthedocs
+    features:
+        # - announce.dismiss
+        - content.action.edit
+        - content.action.view
+        - content.code.annotate
+        - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings
