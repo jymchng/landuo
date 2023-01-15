@@ -18,7 +18,7 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
             **init_subclass_kwargs):
         return super().__init_subclass__(immutable, use_instance_dict, **init_subclass_kwargs)
 
-    def __new__(cls, fget, fset=None, fdel=None):
+    def __new__(cls, fget, *, fset=_states._unimplemented, fdel=_states._unimplemented):
         obj = object.__new__(cls)
         cls.mutablelpinst.add(obj)
         logger.debug(f"***")
@@ -30,7 +30,7 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         logger.debug(f"In {cls.__name__=}'s *__new__, {fdel=}")
         return obj
 
-    def __init__(self, fget, fset=_states._unimplemented, fdel=_states._unimplemented): # doesn't know about self.name yet
+    def __init__(self, fget, *, fset=_states._unimplemented, fdel=_states._unimplemented): # doesn't know about self.name yet
         self._fget = fget
         logger.debug(f"In {self.__class__.__name__=}'s __init__, {self._fget=}")
         self._fset = fset
@@ -85,11 +85,11 @@ class BaseImmutableLazyProperty(lazyproperty, immutable=True):
             "__set_name__() on it."
         )
 
-    def __new__(cls, fget, *, fset=None, fdel=None):
+    def __new__(cls, fget, *, fdel=_states._unimplemented):
         obj = object.__new__(cls)
         return obj
 
-    def __init__(self, fget, *, fdel=None):
+    def __init__(self, fget, *, fdel=_states._unimplemented):
         self._fget = fget
         self._fdel = fdel
         self._recalculate = False
@@ -99,6 +99,6 @@ class BaseImmutableLazyProperty(lazyproperty, immutable=True):
             f"The lazyproperty `{self.name}` is set to be immutable.")
 
     def deleter(self, fdel):
-        mutablelazyprop = type(self)(self._fget, fdel)
+        mutablelazyprop = type(self)(self._fget, fdel=fdel)
         mutablelazyprop.name = self.name
         return mutablelazyprop
