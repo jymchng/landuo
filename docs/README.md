@@ -20,8 +20,6 @@ Version: 0.2.0
 |Deleter method is available|Cached property should allow for the implementation of `.deleter(self)` method.|Incomplete but have draft-codes.|
 |Async compatibility|Cached property should be thread-safe. pydanny's [`cached_property`](https://github.com/pydanny/cached-property/blob/master/cached_property.py) allows for this.|No plans to do that in near future.
 
-
-
 # How to Use
 ## For Existing Project
 
