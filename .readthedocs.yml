@@ -13,6 +13,7 @@ build:
 
 mkdocs:
   configuration: mkdocs.yml
+  fail_on_warning: false
 
   # Explicitly set the version of Python and its requirements
 python:
