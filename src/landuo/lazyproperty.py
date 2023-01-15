@@ -13,12 +13,15 @@ class lazyproperty:
         immutable (bool): If `True`, managed property of a class cannot be set to other values.
         use_instance_dict (bool, optional): Defaults to `True`. If `True`, `lazyproperty` uses the instance's `__dict__` attribute as
             the cache for the managed property. If `False`, `lazyproperty` uses a `weakref.WeakKeyDictionary` as the cache.
-        prefix (str, optional): Defaults to '' - empty string. Tells `lazyproperty` the name of the 'private' attribute of the managed property.
-        private_var_name (str, optional): Defaults to '' - empty string. Tells `lazyproperty` the exact name of the 'private' attribute stored
-            in the instance's `__dict__`.
+        prefix (str, optional): Defaults to "". Tells `lazyproperty` the prefix of the 'private' attribute of the managed property. e.g. If
+        the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the prefix is '_'.
+        private_var_name (str, optional): Defaults to "". Tells `lazyproperty` the exact name of the 'private' attribute stored
+            in the instance's `__dict__`. e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the private_var_name is '_name'.
 
     Examples:
-        (1):
+    
+        (1)
+            
             from landuo import property # functions in the same way as inbuilt `@property` decorator.
 
             class Person:
@@ -38,7 +41,24 @@ class lazyproperty:
             'Henry'
             >>> henry.name = 'James'
             >>> henry.name
-            'James'
+            'James'   
+        (2)
+            
+            from landuo import lazyproperty
+           
+            class Person:
+                def __init__(self, name):
+                    self._name = name
+
+                @lazyproperty(immutable=False, use_instance_dict=True) # returns a managed attribute whose cache is the
+                # instance of Person's `__dict__` attribute
+                def name(self):
+                    return self._name
+
+                @name.setter # if the managed attribute `name`'s `immutable` parameter into the `lazyproperty` decorator is set
+                # to `False`, then this will raise an AttributeError as the managed attribute `name` has no `setter` method.
+                def name(self, new_name):
+                    self._name = new_name
     """
     _registry: dict[(bool, bool), Type] = dict()
     name: str = None

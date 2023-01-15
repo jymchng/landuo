@@ -9,6 +9,9 @@ nav:
 
 theme:
     name: readthedocs
+    features:
+      - content.code.copy
+      - content.code.annotate # (1)!
 
 plugins:
   - search
