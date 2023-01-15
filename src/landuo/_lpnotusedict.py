@@ -58,7 +58,7 @@ def _delete_(descriptor_obj: Union[NotUseDictImmutableLazyProperty,
     if descriptor_obj._fdel is _states._unimplemented:
         raise AttributeError(
             f"lazyproperty '{descriptor_obj.name}' has no deleter.")
-    if descriptor_obj.name in descriptor_obj._class_cache:
-        del descriptor_obj._class_cache[descriptor_obj.name]
+    if descriptor_obj in descriptor_obj._class_cache:
+        del descriptor_obj._class_cache[descriptor_obj]
     descriptor_obj._fdel(instance)
     del descriptor_obj

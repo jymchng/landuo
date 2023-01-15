@@ -73,12 +73,6 @@ class Employee(Person):
         return super().introduction + \
             f' I am a happy person and my occupation is {self.occupation}!'
 
-    # def _introduction(self):
-    #     return super().introduction + ' and I am a happy person!'
-
-    # def _introduction(self):
-    #     return super()._introduction + ' and I am a happy person!'
-
     @property
     def occupation(self):
         return self._occupation
