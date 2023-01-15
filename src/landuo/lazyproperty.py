@@ -62,30 +62,18 @@ class lazyproperty:
                 prefix: str = '',
                 private_var_name: str = '',):
         
-        logger.debug(f"In {cls.__name__=}'s __new__, {prefix=}")
         cls._prefix = prefix or ''
-        logger.debug(f"In {cls.__name__=}'s __new__, {cls._prefix=}")
-        logger.debug(f"In {cls.__name__=}'s __new__, {private_var_name=}")
         cls._private_var_name = private_var_name or ''
-        logger.debug(f"In {cls.__name__=}'s __new__, {cls._private_var_name=}")
         return cls._registry[(immutable, use_instance_dict)]
 
     def __set_name__(self, owner, name):
-        logger.debug(f"In {self.__class__.__name__=}'s __set_name__, {self=}, {owner=}, {name=}.")
         owner_set_private_var_prefix = getattr(
                 owner,
                 'private_var_prefix',
                 '')
         any_prefix = self._prefix or owner_set_private_var_prefix
         self.private_var_name = self._private_var_name or (any_prefix + name)
-            
-        logger.debug(f"In {self.__class__.__name__=}'s __set_name__, {self._prefix=}")
-        logger.debug(f"In {self.__class__.__name__=}'s __set_name__, {self._private_var_name=}")
-        logger.debug(f"In {self.__class__.__name__=}'s __set_name__, {owner_set_private_var_prefix=}")
-        logger.debug(f"In {self.__class__.__name__=}'s __set_name__, {self.private_var_name=}")
-
         self.name = name
-
         if name != self.name:
             raise TypeError(
                 "Cannot assign the same cached_property to two different names "
