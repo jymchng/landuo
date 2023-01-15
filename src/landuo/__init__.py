@@ -4,7 +4,7 @@ from . import (
     _states,
 )
 
-version = "0.2.0"
+version = "0.2.1"
 
 from .lazyproperty import lazyproperty
 
