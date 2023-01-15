@@ -45,9 +45,9 @@ push = true
     'current_version = "{version}"',
     'version = "{version}"'
 ]
-"setup.py" = [
-    '__version__ = "{version}"',
-]
+# "setup.py" = [
+#     '__version__ = "{version}"',
+# ]
 "README.md" = [
     "Version: {version}",
 ]
