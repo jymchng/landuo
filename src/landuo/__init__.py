@@ -4,6 +4,8 @@ from . import (
     _states,
 )
 
+version = "0.2.0"
+
 from .lazyproperty import lazyproperty
 
 property = lazyproperty(immutable=False)

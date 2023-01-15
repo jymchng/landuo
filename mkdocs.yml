@@ -10,8 +10,11 @@ nav:
 theme:
     name: readthedocs
     features:
-      - content.code.copy
-      - content.code.annotate # (1)!
+        # - announce.dismiss
+        - content.action.edit
+        - content.action.view
+        - content.code.annotate
+        - content.code.copy
 
 plugins:
   - search

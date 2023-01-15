@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 class BaseMutableLazyProperty(lazyproperty, immutable=False):
 
+
     def __init_subclass__(
             cls,
             immutable: bool,

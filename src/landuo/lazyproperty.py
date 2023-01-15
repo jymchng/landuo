@@ -11,12 +11,15 @@ class lazyproperty:
 
     Arguments:
         immutable (bool): If `True`, managed property of a class cannot be set to other values.
-        use_instance_dict (bool, optional): Defaults to `True`. If `True`, `lazyproperty` uses the instance's `__dict__` attribute as
+        use_instance_dict (bool, optional): If `True`, `lazyproperty` uses the instance's `__dict__` attribute as
             the cache for the managed property. If `False`, `lazyproperty` uses a `weakref.WeakKeyDictionary` as the cache.
-        prefix (str, optional): Defaults to "". Tells `lazyproperty` the prefix of the 'private' attribute of the managed property. e.g. If
-        the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the prefix is '_'.
-        private_var_name (str, optional): Defaults to "". Tells `lazyproperty` the exact name of the 'private' attribute stored
-            in the instance's `__dict__`. e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the private_var_name is '_name'.
+            Defaults to `True`.
+        prefix (str, optional): Tells `lazyproperty` the prefix of the 'private' attribute of the managed property. 
+            e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the prefix is '_'.
+            Defaults to `""`.
+        private_var_name (str, optional): Tells `lazyproperty` the exact name of the 'private' attribute stored
+            in the instance's `__dict__`. e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`,
+            then the private_var_name is '_name'. Defaults to `""`
 
     Examples:
     

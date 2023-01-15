@@ -45,6 +45,10 @@ push = true
     'current_version = "{version}"',
     'version = "{version}"'
 ]
+
+"src/landuo/__init__.py" = [
+    'version = "{version}"'
+]
 # "setup.py" = [
 #     '__version__ = "{version}"',
 # ]
