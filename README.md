@@ -14,12 +14,12 @@ Version: 0.2.0
 # Objectives
 |Objective|Description|Status|
 |:--|:--|:--|
-|Backward compatibility|It should be 'easy' (ideally, by adding a one-liner) to existing project to incorporate caching in property.|Completed|
+|Backward compatibility|It should be 'easy' (ideally, by adding a one-liner) to existing project to incorporate caching in property.|![](https://badgen.net/badge/status/completed/green)|
 |Caching|Property must be cached. It should allow the use of another 'cache' beyond the instance's `__dict__` attribute for instances whose `__dict__` attribute is a non-mutable mapping. Read [more](https://docs.python.org/3/library/functools.html#cached_property).|Kinda?|
-|Setter method is available|Cached property should allow for the implementation of `.setter(self, value)` method.|Completed|
-|Deleter method is available|Cached property should allow for the implementation of `.deleter(self)` method.|Incomplete but have draft-codes.|
+|Setter method is available|Cached property should allow for the implementation of `.setter(self, value)` method.|![](https://badgen.net/badge/status/completed/green)|
+|Deleter method is available|Cached property should allow for the implementation of `.deleter(self)` method.|![](https://badgen.net/badge/status/completed/green)|
 |Async compatibility|Cached property should be thread-safe. pydanny's [`cached_property`](https://github.com/pydanny/cached-property/blob/master/cached_property.py) allows for this.|No plans to do that in near future.
-|Properties should be inherited as it is.|An example would be best here, if `self.name` returns `self._name` for a superclass, then for the subclass `self.name` should still return `self._name`, UNLESS wilfully overridden, e.g. `self.name` returns `f'Hi, I'm {super().name}`, the subclass' managed attribute `name` prepends `'Hi, I'm '`.|Completed|
+|Properties should be inherited as it is.|An example would be best here, if `self.name` returns `self._name` for a superclass, then for the subclass `self.name` should still return `self._name`, UNLESS wilfully overridden, e.g. `self.name` returns `f'Hi, I'm {super().name}`, the subclass' managed attribute `name` prepends `'Hi, I'm '`.|![](https://badgen.net/badge/status/completed/green)|
 
 
 
