@@ -1,4 +1,4 @@
-import math
+from landuo import property # add this one line for cached property
 import time
 
 
@@ -11,7 +11,6 @@ class Person:
 
     @property
     def name(self):
-        print(f"Getting {self._name}'s name...")
         return self._name
 
     @name.setter
@@ -30,7 +29,7 @@ class Person:
     @property
     def weight(self):
         print(f"Getting {self.name}'s weight...")
-        print(f"Doing complex calculations for {self.name}'s weight...")
+        print(f"Doing complex calculations weight...")
         return self._weight
 
     @weight.setter
@@ -42,21 +41,18 @@ class Person:
 
     @property
     def height(self):
-        print(f"Getting {self._name}'s height...")
         return self._height
 
     @property
     def BMI(self):
-        print(f"Calculating {self._name}'s BMI...")
         self._BMI = self.weight / (self.height)**2
-        print(f"Doing complex calculations for {self.name}'s BMI...")
+        print(f"Doing complex calculations BMI...")
         time.sleep(1.5)
         return self._BMI
 
     @BMI.setter
     def BMI(self, value):
-        print(f"Setting {self._name}'s BMI...")
-        print(f"Doing complex calculations for {self.name}'s BMI...")
+        print(f"Doing complex calculations for BMI...")
         time.sleep(1.5)
         self.weight = value * (self.height)**2
         self._BMI = value
@@ -69,7 +65,8 @@ class Employee(Person):
         self._occupation = occupation
 
     @property
-    def introduction(self):
+    def introduction(self):  # subclass modifies the superclass' managed attribute
+        # call the superclass' managed attribute and edit/extend it.
         return super().introduction + \
             f' I am a happy person and my occupation is {self.occupation}!'
 

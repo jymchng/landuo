@@ -8,7 +8,7 @@ nav:
     - lazyproperty: APIs/lazyproperty.md
 
 theme:
-    name: bootstrap4
+    name: readthedocs
 
 plugins:
   - search
