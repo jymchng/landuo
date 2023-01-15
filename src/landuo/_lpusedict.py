@@ -1,29 +1,39 @@
 from .lazyproperty import lazyproperty
-from weakref import WeakSet
 from .exceptions import *
 from . import _states
 import logging
+from contextlib import redirect_stdout
+import io
 
 logger = logging.getLogger(__name__)
 
 
 class BaseMutableLazyProperty(lazyproperty, immutable=False):
 
-    mutablelpinst = WeakSet()
-
     def __init_subclass__(
             cls,
             immutable: bool,
             use_instance_dict: bool,
             **init_subclass_kwargs):
-        return super().__init_subclass__(immutable, use_instance_dict, **init_subclass_kwargs)
+        return super().__init_subclass__(
+            immutable, use_instance_dict, **init_subclass_kwargs)
 
-    def __new__(cls, fget, *, fset=_states._unimplemented, fdel=_states._unimplemented):
+    def __new__(
+            cls,
+            fget,
+            *,
+            fset=_states._unimplemented,
+            fdel=_states._unimplemented):
         obj = object.__new__(cls)
-        cls.mutablelpinst.add(obj)
         return obj
 
-    def __init__(self, fget, *, fset=_states._unimplemented, fdel=_states._unimplemented): # doesn't know about self.name yet
+    # doesn't know about self.name yet
+    def __init__(
+            self,
+            fget,
+            *,
+            fset=_states._unimplemented,
+            fdel=_states._unimplemented):
         self._fget = fget
         self._fset = fset
         self._fdel = fdel
@@ -33,11 +43,12 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         if self._fset is _states._unimplemented:
             raise SetterUnimplemented(self.name, _states._unimplemented)
         self._fset(instance, value)
-        for instance_of_subclasses in self.mutablelpinst:
-            instance_of_subclasses._recalculate = True
+        with redirect_stdout(io.StringIO()):
+            instance.__dict__[self.name] = value = self._fget(instance)
 
     def setter(self, fset):
-        mutablelazyprop = self.__class__(self._fget, fset=fset, fdel=self._fdel)
+        mutablelazyprop = self.__class__(
+            self._fget, fset=fset, fdel=self._fdel)
         mutablelazyprop.name = self.name
         del self
         return mutablelazyprop
@@ -47,10 +58,6 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         mutablelazyprop.name = self.name
         return mutablelazyprop
 
-    # def __delete__(self, instance):
-    #     super().__delete__(instance)
-    #     self._fset = None
-
 
 class BaseImmutableLazyProperty(lazyproperty, immutable=True):
 
@@ -59,14 +66,8 @@ class BaseImmutableLazyProperty(lazyproperty, immutable=True):
             immutable: bool,
             use_instance_dict: bool,
             **init_subclass_kwargs):
-        return super().__init_subclass__(immutable, use_instance_dict, **init_subclass_kwargs)
-
-    @staticmethod
-    def func(instance):
-        raise TypeError(
-            "Cannot use cached_property instance without calling "
-            "__set_name__() on it."
-        )
+        return super().__init_subclass__(
+            immutable, use_instance_dict, **init_subclass_kwargs)
 
     def __new__(cls, fget, *, fdel=_states._unimplemented):
         obj = object.__new__(cls)

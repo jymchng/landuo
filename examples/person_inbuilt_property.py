@@ -17,13 +17,15 @@ class Person:
     @name.setter
     def name(self, value):
         if len(value) < 2:
-            raise ValueError("A Person's name cannot be less than 2 characters!")
+            raise ValueError(
+                "A Person's name cannot be less than 2 characters!")
         self._name = value
-        
+
     def _introduction(self):
         return f"Hi, my name is {self.name}!"
-    
-    introduction = property(_introduction) # different way to initialize a property
+
+    # different way to initialize a property
+    introduction = property(_introduction)
 
     @property
     def weight(self):
@@ -37,7 +39,6 @@ class Person:
             raise ValueError("Invalid Weight!")
         self._weight = value
         return self._weight
-
 
     @property
     def height(self):
@@ -59,27 +60,29 @@ class Person:
         time.sleep(1.5)
         self.weight = value * (self.height)**2
         self._BMI = value
-        
+
+
 class Employee(Person):
-    
+
     def __init__(self, name, height, weight, occupation):
         super().__init__(name, height, weight)
         self._occupation = occupation
-    
-    @property  
+
+    @property
     def introduction(self):
-        return super().introduction + f' I am a happy person and my occupation is {self.occupation}!'
-    
+        return super().introduction + \
+            f' I am a happy person and my occupation is {self.occupation}!'
+
     # def _introduction(self):
     #     return super().introduction + ' and I am a happy person!'
-    
+
     # def _introduction(self):
     #     return super()._introduction + ' and I am a happy person!'
-    
-    @property   
+
+    @property
     def occupation(self):
         return self._occupation
-    
+
     @occupation.setter
     def occupation(self, value):
         if not isinstance(value, str):
