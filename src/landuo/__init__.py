@@ -5,7 +5,7 @@ from . import (
     _states,
 )
 
-version = "0.2.1"
+version = "1.0.0"
 
 
 property = cachedproperty(immutable=False)
