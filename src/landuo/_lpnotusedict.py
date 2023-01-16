@@ -1,5 +1,5 @@
 from weakref import WeakKeyDictionary
-from ._lpusedict import BaseMutableLazyProperty, BaseImmutableLazyProperty
+from ._lpusedict import BaseImmutableCachedProperty, BaseMutableCachedProperty
 from . import _states
 from .exceptions import *
 from typing import Union, Any, Type
@@ -11,8 +11,8 @@ from ._states import _notavalue
 logger = logging.getLogger(__name__)
 
 
-class NotUseDictMutableLazyProperty(
-        BaseMutableLazyProperty,
+class NotUseDictMutableCachedProperty(
+        BaseMutableCachedProperty,
         immutable=False,
         use_instance_dict=False):
 
@@ -46,24 +46,24 @@ class NotUseDictMutableLazyProperty(
         _delete_(self, instance)
 
 
-class NotUseDictImmutableLazyProperty(
-        NotUseDictMutableLazyProperty,
+class NotUseDictImmutableCachedProperty(
+        NotUseDictMutableCachedProperty,
         immutable=True,
         use_instance_dict=False):
 
     def __set__(self, instance, value):
         raise AttributeError(
-            f"The lazyproperty `{self.name}` is set to be immutable.")
+            f"The cachedproperty `{self.name}` is set to be immutable.")
 
     def __delete__(self, instance):
         _delete_(self, instance)
 
 
-def _delete_(descriptor_obj: Union[NotUseDictImmutableLazyProperty,
-             NotUseDictMutableLazyProperty], instance: Any):
+def _delete_(descriptor_obj: Union[NotUseDictMutableCachedProperty,
+             NotUseDictImmutableCachedProperty], instance: Any):
     if descriptor_obj._fdel is _states._unimplemented:
         raise AttributeError(
-            f"lazyproperty '{descriptor_obj.name}' has no deleter.")
+            f"cachedproperty '{descriptor_obj.name}' has no deleter.")
     if descriptor_obj in descriptor_obj._class_cache:
         del descriptor_obj._class_cache[descriptor_obj]
     descriptor_obj._fdel(instance)
