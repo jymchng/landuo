@@ -53,9 +53,6 @@ class NotUseDictImmutableCachedProperty(
         raise AttributeError(
             f"The cachedproperty `{self.name}` is set to be immutable.")
 
-    def __delete__(self, instance):
-        _delete_(self, instance)
-
 
 def _delete_(descriptor_obj: Union[NotUseDictMutableCachedProperty,
              NotUseDictImmutableCachedProperty], instance: Any):
