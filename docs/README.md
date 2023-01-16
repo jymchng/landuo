@@ -21,7 +21,27 @@ Version: 1.0.0
 |Async compatibility|Cached property should be thread-safe. pydanny's [`cached_property`](https://github.com/pydanny/cached-property/blob/master/cached_property.py) allows for this.|No plans to do that in near future.
 |Properties should be inherited as it is.|An example would be best here, if `self.name` returns `self._name` for a superclass, then for the subclass `self.name` should still return `self._name`, UNLESS wilfully overridden, e.g. `self.name` returns `f'Hi, I'm {super().name}`, the subclass' managed attribute `name` prepends `'Hi, I'm '`.|![](https://badgen.net/badge/status/completed/green)|
 
+# Installation
 
+# Using `pip`
+
+With `pip` installed, you can use the following command to install `landuo`.
+
+```cmd
+python -m pip install landuo
+```
+
+Check that `landuo` is installed by importing it in a python console.
+
+Example:
+
+```python
+from landuo import property
+```
+```
+>>> property
+<class 'landuo._lpusedict.BaseMutableCachedProperty'> # Output
+```
 
 # How to Use
 ## For Existing Project
@@ -68,7 +88,7 @@ class Person:
 
 # Why the Name `landuo`?
 
-懒惰 (Hàn yǔ Pīn yīn: lănduò) means lazy in Chinese, which kind of describes the `cachedproperty` class of this package.
+懒惰 (Hàn yǔ Pīn yīn: lănduò) means lazy in Chinese, which describes the `cachedproperty` class of this package.
 
 
 
