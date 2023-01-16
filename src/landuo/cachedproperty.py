@@ -10,15 +10,12 @@ class cachedproperty:
 
     Arguments:
         immutable (bool): If `True`, managed property of a class cannot be set to other values.
-        use_instance_dict (bool, optional): If `True`, `cachedproperty` uses the instance's `__dict__` attribute as
-            the cache for the managed property. If `False`, `cachedproperty` uses a `weakref.WeakKeyDictionary` as the cache.
+        use_instance_dict (bool, optional): If `True`, `cachedproperty` uses the instance's `__dict__` attribute as the cache for the managed property. If `False`, `cachedproperty` uses a `weakref.WeakKeyDictionary` as the cache.
             Defaults to `True`.
-        prefix (str, optional): Tells `cachedproperty` the prefix of the 'private' attribute of the managed property.
-            e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the prefix is '_'.
+        prefix (str, optional): Tells `cachedproperty` the prefix of the 'private' attribute of the managed property. e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the prefix is `'_'`.
             Defaults to `""`.
-        private_var_name (str, optional): Tells `cachedproperty` the exact name of the 'private' attribute stored
-            in the instance's `__dict__`. e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`,
-            then the private_var_name is '_name'. Defaults to `""`
+        private_var_name (str, optional): Tells `cachedproperty` the exact name of the 'private' attribute stored in the instance's `__dict__`. e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the private_var_name is `'_name'`.
+            Defaults to `""`.
 
     Examples:
 
