@@ -6,6 +6,7 @@ from typing import Union, Any, Type
 from contextlib import redirect_stdout
 import io
 import logging
+from ._states import _notavalue
 
 logger = logging.getLogger(__name__)
 
@@ -15,39 +16,44 @@ class NotUseDictMutableLazyProperty(
         immutable=False,
         use_instance_dict=False):
 
-    _class_cache: WeakKeyDictionary
+    def __init__(
+            self,
+            fget,
+            *,
+            fset=_states._unimplemented,
+            fdel=_states._unimplemented):
+        super().__init__(fget, fset=fset, fdel=fdel)
+        self._instance_cache = WeakKeyDictionary()
+        self._recalculate = False
 
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        if self in self._class_cache:
-            return self._class_cache[self]
-        self._class_cache[self] = value = self._fget(instance)
+        if self in self._instance_cache and not self._recalculate:
+            return self._instance_cache[instance]
+        self._instance_cache[instance] = value = self._fget(instance)
+        self._recalculate = False
         return value
 
-    def __set__(self, instance: Any, value: Any):
+    def __set__(self, instance, value):
         if self._fset is _states._unimplemented:
             raise SetterUnimplemented(self.name, _states._unimplemented)
         self._fset(instance, value)
-        with redirect_stdout(io.StringIO()):
-            self._class_cache[self] = value = self._fget(instance)
+        for instance_of_subclasses in self._class_cache.keys():
+            instance_of_subclasses._recalculate = True
 
     def __delete__(self, instance):
         _delete_(self, instance)
 
 
 class NotUseDictImmutableLazyProperty(
-        BaseImmutableLazyProperty,
+        NotUseDictMutableLazyProperty,
         immutable=True,
         use_instance_dict=False):
 
-    def __get__(self, instance: Any, owner: Type[Any]):
-        if instance is None:
-            return self
-        if self in self._class_cache:
-            return self._class_cache[self]
-        self._class_cache[self] = value = self._fget(instance)
-        return value
+    def __set__(self, instance, value):
+        raise AttributeError(
+            f"The lazyproperty `{self.name}` is set to be immutable.")
 
     def __delete__(self, instance):
         _delete_(self, instance)

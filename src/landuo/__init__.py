@@ -1,3 +1,4 @@
+from .lazyproperty import lazyproperty
 from . import (
     _lpnotusedict,
     _lpusedict,
@@ -6,7 +7,6 @@ from . import (
 
 version = "0.2.1"
 
-from .lazyproperty import lazyproperty
 
 property = lazyproperty(immutable=False)
 cached_property = lazyproperty(immutable=False)

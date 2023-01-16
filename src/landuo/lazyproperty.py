@@ -14,7 +14,7 @@ class lazyproperty:
         use_instance_dict (bool, optional): If `True`, `lazyproperty` uses the instance's `__dict__` attribute as
             the cache for the managed property. If `False`, `lazyproperty` uses a `weakref.WeakKeyDictionary` as the cache.
             Defaults to `True`.
-        prefix (str, optional): Tells `lazyproperty` the prefix of the 'private' attribute of the managed property. 
+        prefix (str, optional): Tells `lazyproperty` the prefix of the 'private' attribute of the managed property.
             e.g. If the managed property of the class is `name` and the 'private' attribute of it is `_name`, then the prefix is '_'.
             Defaults to `""`.
         private_var_name (str, optional): Tells `lazyproperty` the exact name of the 'private' attribute stored
@@ -22,9 +22,9 @@ class lazyproperty:
             then the private_var_name is '_name'. Defaults to `""`
 
     Examples:
-    
+
         (1)
-            
+
             from landuo import property # functions in the same way as inbuilt `@property` decorator.
 
             class Person:
@@ -44,11 +44,11 @@ class lazyproperty:
             'Henry'
             >>> henry.name = 'James'
             >>> henry.name
-            'James'   
+            'James'
         (2)
-            
+
             from landuo import lazyproperty
-           
+
             class Person:
                 def __init__(self, name):
                     self._name = name
@@ -65,8 +65,8 @@ class lazyproperty:
     """
     _registry: dict[(bool, bool), Type] = dict()
     name: str = None
-    _class_cache: WeakKeyDictionary['BaseMutableLazyProperty',
-                                    Any] = WeakKeyDictionary()
+    _class_cache: WeakKeyDictionary[WeakKeyDictionary['BaseMutableLazyProperty',
+                                    Any]] = WeakKeyDictionary(WeakKeyDictionary())
 
     def __init_subclass__(
             cls,
@@ -99,7 +99,7 @@ class lazyproperty:
 
         if name != self.name:
             raise TypeError(
-                "Cannot assign the same cached_property to two different names "
+                "Cannot assign the same lazyproperty to two different names "
                 "(%r and %r)." %
                 (self.name, name))
         logger.info(
