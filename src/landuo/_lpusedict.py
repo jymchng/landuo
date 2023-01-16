@@ -1,4 +1,4 @@
-from .lazyproperty import lazyproperty
+from .cachedproperty import cachedproperty
 from .exceptions import *
 from . import _states
 import logging
@@ -8,8 +8,7 @@ import io
 logger = logging.getLogger(__name__)
 
 
-class BaseMutableLazyProperty(lazyproperty, immutable=False):
-
+class BaseMutableCachedProperty(cachedproperty, immutable=False):
 
     def __init_subclass__(
             cls,
@@ -38,7 +37,6 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         self._fget = fget
         self._fset = fset
         self._fdel = fdel
-        self._recalculate = False
 
     def __set__(self, instance, value):
         if self._fset is _states._unimplemented:
@@ -60,7 +58,7 @@ class BaseMutableLazyProperty(lazyproperty, immutable=False):
         return mutablelazyprop
 
 
-class BaseImmutableLazyProperty(lazyproperty, immutable=True):
+class BaseImmutableCachedProperty(cachedproperty, immutable=True):
 
     def __init_subclass__(
             cls,
@@ -81,7 +79,7 @@ class BaseImmutableLazyProperty(lazyproperty, immutable=True):
 
     def __set__(self, instance, value):
         raise AttributeError(
-            f"The lazyproperty `{self.name}` is set to be immutable.")
+            f"The cachedproperty `{self.name}` is set to be immutable.")
 
     def deleter(self, fdel):
         mutablelazyprop = type(self)(self._fget, fdel=fdel)

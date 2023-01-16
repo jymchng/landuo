@@ -1,12 +1,12 @@
+from .cachedproperty import cachedproperty
 from . import (
     _lpnotusedict,
     _lpusedict,
     _states,
 )
 
-version = "0.2.1"
+version = "1.0.0"
 
-from .lazyproperty import lazyproperty
 
-property = lazyproperty(immutable=False)
-cached_property = lazyproperty(immutable=False)
+property = cachedproperty(immutable=False)
+cached_property = cachedproperty(immutable=False)

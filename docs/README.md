@@ -1,15 +1,15 @@
-# landuo (lazyproperty)
+# landuo (cachedproperty)
 _just a property but lazier_...
 
-Simply put, `lazyproperty` = `property` + `cached_property`.
+Simply put, `cachedproperty` = `property` + `cached_property`.
 
-Version: 0.2.0
+Version: 1.0.0
 
 # Reasons for Creating This
 1. In-built [`property`](https://docs.python.org/3/library/functions.html#property) decorator allows you to manage your instances' attributes but at a cost of repeated computation for each read of the attribute.
 2. `cached_property` built by many [1], allows you to cache your instances' attributes but at a cost of losing the ability to implement `setter` methods of them.
 
-`lazyproperty` (used interchangably with `cached property` or its variants) solves this problem by caching of the values of your instances' attributes AND implementing `setter` methods for each of them.
+`cachedproperty` (used interchangably with `cached property` or its variants) solves this problem by caching of the values of your instances' attributes AND implementing `setter` methods for each of them.
 
 # Objectives
 |Objective|Description|Status|
@@ -35,11 +35,11 @@ from landuo import property
 #... other import statements
 ```
 
-That's it! All your original `property` should now have be cached. By default, the cache used is the instance's attribute `__dict__`, read more at [APIs: lazyproperty](APIs/lazyproperty.md).
+That's it! All your original `property` should now have be cached. By default, the cache used is the instance's attribute `__dict__`, read more at [APIs: cachedproperty](APIs/cachedproperty.md).
 
 # Glossary
 
-Managed Attribute(s) - The set of attribute(s) of a class which is managed by the `lazyproperty` / `property` object. To 'manage' means that the 'read' and/or 'write' capabilities of the attribute is decided by another python object.
+Managed Attribute(s) - The set of attribute(s) of a class which is managed by the `cachedproperty` / `property` object. To 'manage' means that the 'read' and/or 'write' capabilities of the attribute is decided by another python object.
 
 Private Variable(s) - Python has no strictly 'private' variable. In this case, the 'private' variable refers to the attribute of a class that is managed by another python object.
 
@@ -68,7 +68,7 @@ class Person:
 
 # Why the Name `landuo`?
 
-懒惰 (Hàn yǔ Pīn yīn: lănduò) means lazy in Chinese, which describes the `lazyproperty` class of this package.
+懒惰 (Hàn yǔ Pīn yīn: lănduò) means lazy in Chinese, which kind of describes the `cachedproperty` class of this package.
 
 
 

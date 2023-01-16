@@ -1,9 +1,8 @@
-from landuo import property # add this one line for cached property
+# from landuo import property # add this one line for cached property
 import time
 
 
 class Person:
-
 
     def __init__(self, name, height, weight):
         self._name = name
