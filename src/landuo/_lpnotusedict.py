@@ -39,8 +39,8 @@ class NotUseDictMutableCachedProperty(
         if self._fset is _states._unimplemented:
             raise SetterUnimplemented(self.name, _states._unimplemented)
         self._fset(instance, value)
-        for instance_of_subclasses in self._class_cache.keys():
-            instance_of_subclasses._recalculate = True
+        with redirect_stdout(io.StringIO()):
+            self._instance_cache[instance] = value = self._fget(instance)
 
     def __delete__(self, instance):
         _delete_(self, instance)
