@@ -41,7 +41,13 @@ class NotUseDictMutableCachedProperty(
             self._instance_cache[instance] = value = self._fget(instance)
 
     def __delete__(self, instance):
-        _delete_(self, instance)
+        if self._fdel is _states._unimplemented:
+            raise AttributeError(
+                f"cachedproperty '{self.name}' has no deleter.")
+        if instance in self._instance_cache:
+            del self._instance_cache[instance]
+        self._fdel(instance)
+        del self
 
 
 class NotUseDictImmutableCachedProperty(
@@ -52,14 +58,3 @@ class NotUseDictImmutableCachedProperty(
     def __set__(self, instance, value):
         raise AttributeError(
             f"The cachedproperty `{self.name}` is set to be immutable.")
-
-
-def _delete_(descriptor_obj: Union[NotUseDictMutableCachedProperty,
-             NotUseDictImmutableCachedProperty], instance: Any):
-    if descriptor_obj._fdel is _states._unimplemented:
-        raise AttributeError(
-            f"cachedproperty '{descriptor_obj.name}' has no deleter.")
-    if descriptor_obj in descriptor_obj._class_cache:
-        del descriptor_obj._class_cache[descriptor_obj]
-    descriptor_obj._fdel(instance)
-    del descriptor_obj
