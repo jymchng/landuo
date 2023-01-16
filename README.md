@@ -58,7 +58,7 @@ from landuo import property
 #... other import statements
 ```
 
-That's it! All your original `property` should now have be cached. By default, the cache used is the instance's attribute `__dict__`, read more at [APIs: cachedproperty](APIs/cachedproperty.md).
+That's it! All your original `property` should now have caching. By default, the cache used is the instance's attribute `__dict__`, read more at [APIs: cachedproperty](APIs/cachedproperty.md).
 
 # Glossary
 
