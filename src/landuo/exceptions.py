@@ -1,7 +1,7 @@
 from ._states import _missing, _notavalue, _unimplemented, _deleted
 
 
-class BaseLazyPropertyException(Exception):
+class BaseCachedPropertyException(Exception):
     """Common BaseException for landuo."""
 
     def __init__(self, descriptor_name, state) -> None:
@@ -9,13 +9,13 @@ class BaseLazyPropertyException(Exception):
         self.state = state
 
 
-class DeletedLazyProperty(BaseLazyPropertyException):
+class DeletedCachedProperty(BaseCachedPropertyException):
 
     def __str__(self):
-        return f"The lazyproperty `{self.descriptor_name}` has been {self.state}."
+        return f"The CachedProperty `{self.descriptor_name}` has been {self.state}."
 
 
-class SetterUnimplemented(BaseLazyPropertyException):
+class SetterUnimplemented(BaseCachedPropertyException):
 
     def __str__(self):
-        return f"The lazyproperty `{self.descriptor_name}`'s setter is {self.state}."
+        return f"The CachedProperty `{self.descriptor_name}`'s setter is {self.state}."

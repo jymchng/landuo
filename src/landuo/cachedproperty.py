@@ -104,7 +104,8 @@ class cachedproperty:
 
     def __delete__(self, instance):
         if self._fdel is _states._unimplemented:
-            raise AttributeError(f"cachedproperty '{self.name}' has no deleter.")
+            raise AttributeError(
+                f"cachedproperty '{self.name}' has no deleter.")
         if self.name in instance.__dict__:
             del instance.__dict__[self.name]
         self._fdel(instance)
