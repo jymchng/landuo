@@ -5,7 +5,7 @@ nav:
   - Install: installation.md
   - Quickstart: quickstart.md
   - APIs:
-    - lazyproperty: APIs/lazyproperty.md
+    - cachedproperty: APIs/cachedproperty.md
 
 theme:
     name: readthedocs
