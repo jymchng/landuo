@@ -22,6 +22,7 @@ Version: 1.0.0
 |Properties should be inherited as it is.|An example would be best here, if `self.name` returns `self._name` for a superclass, then for the subclass `self.name` should still return `self._name`, UNLESS wilfully overridden, e.g. `self.name` returns `f'Hi, I'm {super().name}`, the subclass' managed attribute `name` prepends `'Hi, I'm '`.|![](https://badgen.net/badge/status/completed/green)|
 
 # Installation
+[More on Installation](installation.md)
 
 # Using `pip`
 
@@ -44,6 +45,8 @@ from landuo import property
 ```
 
 # How to Use
+[More on Usage](quickstart.md)
+
 ## For Existing Project
 
 If you have an existing project which already uses the python's inbuilt `property`,
