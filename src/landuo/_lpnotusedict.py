@@ -24,15 +24,13 @@ class NotUseDictMutableCachedProperty(
             fdel=_states._unimplemented):
         super().__init__(fget, fset=fset, fdel=fdel)
         self._instance_cache = WeakKeyDictionary()
-        self._recalculate = False
 
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        if self in self._instance_cache and not self._recalculate:
+        if instance in self._instance_cache:
             return self._instance_cache[instance]
         self._instance_cache[instance] = value = self._fget(instance)
-        self._recalculate = False
         return value
 
     def __set__(self, instance, value):
